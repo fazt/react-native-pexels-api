@@ -24,48 +24,33 @@ export default function Home({ openSearch }) {
 
   return (
     <>
+      {/* Searching Section */}
       {openSearch && (
-        <View
-          style={{
-            backgroundColor: "#0D0D0D",
-            width: "100%",
-            paddingRight: 80,
-            paddingLeft: 10,
-            flex: 1 / 5,
-            flexDirection: "row",
-            alignItems: "center",
-          }}
-        >
+        <View style={styles.searchSection}>
           <Input
             placeholder="Search a Term"
-            style={{
-              color: "#fff",
-            }}
+            style={styles.input}
             leftIcon={{ type: "feather", name: "search", color: "#fff" }}
             onChangeText={(value) => setSearchTerm(value)}
-            inputContainerStyle={{
-              backgroundColor: "#2C292C",
-              borderBottomWidth: 0,
-              paddingHorizontal: 4,
-            }}
-            leftIconContainerStyle={{
-              paddingStart: 10,
-              marginRight: 7,
-            }}
+            inputContainerStyle={styles.searchInput}
+            leftIconContainerStyle={styles.searchLeftIcon}
           />
           <Button
             title="Search"
-            buttonStyle={{ backgroundColor: "#229783", marginBottom: 27 }}
+            buttonStyle={styles.buttonSearch}
             onPress={() => handleSearch()}
           />
         </View>
       )}
+
+      {/* Main Container */}
       <View style={styles.container}>
+        {/* Total Result Text */}
         {totalResults > 0 && (
-          <Text style={{ color: "#D0D0D0", textAlign: "right", width: "100%" }}>
-            {totalResults} Resultados
-          </Text>
+          <Text style={styles.totalResulText}>{totalResults} Resultados</Text>
         )}
+
+        {/* Container List */}
         <ImageList photos={photos} />
       </View>
     </>
@@ -83,4 +68,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  totalResulText: { color: "#D0D0D0", textAlign: "right", width: "100%" },
+  searchSection: {
+    backgroundColor: "#0D0D0D",
+    width: "100%",
+    paddingRight: 80,
+    paddingLeft: 10,
+    flex: 1 / 5,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  searchInput: {
+    backgroundColor: "#2C292C",
+    borderBottomWidth: 0,
+    paddingHorizontal: 4,
+  },
+  input: {
+    color: "#fff",
+  },
+  searchLeftIcon: {
+    paddingStart: 10,
+    marginRight: 7,
+  },
+  buttonSearch: { backgroundColor: "#229783", marginBottom: 27 },
 });
