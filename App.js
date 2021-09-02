@@ -1,21 +1,76 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
+import { Image, Text } from "react-native";
+import { Button } from "react-native-elements";
+import pexelsLogo from "./assets/pexels.jpg";
 
-export default function App() {
+import HomeScreen from "./views/HomeScreen";
+import ImageScreen from "./views/ImageScreen";
+
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+  const [openSearch, setOpenSearch] = useState(false);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Home"
+          options={{
+            headerLeft: () => {
+              return (
+                <Image
+                  source={pexelsLogo}
+                  style={{
+                    width: 37,
+                    height: 37,
+                    marginEnd: 5,
+                    borderRadius: 5,
+                  }}
+                />
+              );
+            },
+            headerRight: () => (
+              <Text
+                style={{ color: "white", fontSize: 18 }}
+                onPress={() => setOpenSearch(!openSearch)}
+              >
+                {openSearch ? "Close" : "Search"}
+              </Text>
+            ),
+            title: "Pexels App",
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+            headerStyle: {
+              backgroundColor: "#0D0D0D",
+            },
+          }}
+        >
+          {(props) => <HomeScreen {...props} openSearch={openSearch} />}
+        </Stack.Screen>
+        <Stack.Screen
+          name="ImageScreen"
+          component={ImageScreen}
+          options={{
+            headerStyle: {
+              backgroundColor: "#0D0D0D",
+            },
+            title: "Pexels App",
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              fontWeight: "bold",
+            },
+          }}
+        />
+      </Stack.Navigator>
+      <StatusBar style="light" />
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
